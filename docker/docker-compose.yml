@@ -1,0 +1,13 @@
+version: '1.0'
+services:
+  fast:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fast
+    cap_add:
+      - SYS_PTRACE
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./../:/workspace
