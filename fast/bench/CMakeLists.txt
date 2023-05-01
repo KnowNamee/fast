@@ -13,3 +13,4 @@ endfunction()
 enable_testing()
 
 add_benchmark(bench_sync_spinlock sync/bench_spinlock.cc)
+add_benchmark(bench_sync_mutex    sync/bench_mutex.cc)

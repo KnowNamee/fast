@@ -1,5 +1,3 @@
-#pragma once
-
 #include <sync/futex.h>
 
 #include <atomic>
