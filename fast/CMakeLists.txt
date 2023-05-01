@@ -2,12 +2,16 @@ set(LIBRARY_NAME "fastlib")
 set(LIBRARY_SOURCES "")
 
 macro (SRCS)
-    list(APPEND LIBRARY_SOURCES "./src/${ARGV}")
+    foreach(ARG IN ITEMS ${ARGN})
+        list(APPEND LIBRARY_SOURCES "./src/${ARG}")
+    endforeach()
 endmacro()
 
 
 SRCS(
     sync/spinlock.cc
+    sync/mutex.cc
+    sync/futex.cc
 )
 
 message("Library sources : ${LIBRARY_SOURCES}")
