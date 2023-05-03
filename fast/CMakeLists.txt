@@ -13,6 +13,7 @@ SRCS(
     sync/mutex.cc
     sync/futex.cc
     sync/condvar.cc
+    sync/wait_group.cc
 )
 
 message("Library sources : ${LIBRARY_SOURCES}")
