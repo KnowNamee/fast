@@ -12,6 +12,7 @@ SRCS(
     sync/spinlock.cc
     sync/mutex.cc
     sync/futex.cc
+    sync/condvar.cc
 )
 
 message("Library sources : ${LIBRARY_SOURCES}")
