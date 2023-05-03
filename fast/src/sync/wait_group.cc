@@ -13,7 +13,7 @@ void WaitGroup::done() {
   u32 old_waiters = waiters_.fetch_sub(1);
   if (old_waiters == 1) {
     is_any_waiters_.store(0);
-    futexWake(futexAddr(is_any_waiters_), UINT32_MAX);
+    futexWakeAll(futexAddr(is_any_waiters_));
   }
 }
 

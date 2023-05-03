@@ -8,17 +8,19 @@
 
 namespace fast::sync {
 
-namespace {
+// Unix-only helpers ///////////////////////////////////////////////////////////////////////////
 
-int futex(int *uaddr, int futex_op, int val,
+inline int futex(int *uaddr, int futex_op, int val,
           const struct timespec *timeout,
           int *uaddr2, int val3) {
     return syscall(SYS_futex, uaddr, futex_op, val, timeout, uaddr2, val3);
 }
 
+inline void futexWake(u32* addr, u32 count) {
+    futex((int*)addr, FUTEX_WAKE_PRIVATE, (int)count, nullptr, nullptr, 0);
 }
 
-// Unix Only ///////////////////////////////////////////////////////////////////////////
+// Implementation ///////////////////////////////////////////////////////////////////////////
 
 void futexWait(std::atomic<u32>& atomic, u32 old, std::memory_order mo) {
     while (atomic.load(mo) == old) {
@@ -26,8 +28,12 @@ void futexWait(std::atomic<u32>& atomic, u32 old, std::memory_order mo) {
     }
 }
 
-void futexWake(u32* addr, u32 count) {
-    futex((int*)addr, FUTEX_WAKE_PRIVATE, (int)count, nullptr, nullptr, 0);
+void futexWakeOne(u32* addr) {
+    futexWake(addr, 1);
+}
+
+void futexWakeAll(u32* addr) {
+    futexWake(addr, UINT32_MAX);
 }
 
 u32* futexAddr(std::atomic<u32>& atomic) {

@@ -21,7 +21,7 @@ void Mutex::lock() {
 void Mutex::unlock() {
     if (_atomic.fetch_sub(1, std::memory_order_release) != 1) {
         _atomic.store(0, std::memory_order_release);
-        futexWake(futexAddr(_atomic), 1);
+        futexWakeOne(futexAddr(_atomic));
     }
 }
 
