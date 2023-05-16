@@ -14,6 +14,10 @@ SRCS(
     sync/futex.cc
     sync/condvar.cc
     sync/wait_group.cc
+
+    executors/thread_pool.cc
+    executors/manual.cc
+    executors/strand.cc
 )
 
 message("Library sources : ${LIBRARY_SOURCES}")

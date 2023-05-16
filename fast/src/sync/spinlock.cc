@@ -4,19 +4,16 @@
 
 namespace fast::sync {
 
-void TASSpinLock::unlock() {
-	while (true) {
-		if (!_atomic.exchange(1, std::memory_order_acquire)) {
-			return;
-		}
+void TASSpinLock::lock() {
+	while (!_atomic.exchange(1, std::memory_order_acquire)) {
 		while (_atomic.load(std::memory_order_relaxed)) {
 			std::this_thread::yield();
 		}
 	}
 }
 
-void TASSpinLock::lock() {
-	_atomic.exchange(0, std::memory_order_release);
+void TASSpinLock::unlock() {
+	_atomic.store(0, std::memory_order_release);
 }
 
 }

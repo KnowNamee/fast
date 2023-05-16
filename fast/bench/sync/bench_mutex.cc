@@ -44,11 +44,11 @@ static void benchmarkFastMutex(benchmark::State& state) {
 }
 
 BENCHMARK(benchmarkPosixMutex)
-    ->ThreadRange(1, std::thread::hardware_concurrency())
+    ->Threads(1)->Threads(2)->Threads(4)->Threads(6)->Threads(10)->Threads(20)
     ->Unit(benchmark::kMillisecond);
 
 BENCHMARK(benchmarkFastMutex)
-    ->ThreadRange(1, std::thread::hardware_concurrency())
+    ->Threads(1)->Threads(2)->Threads(4)->Threads(6)->Threads(10)->Threads(20)
     ->Unit(benchmark::kMillisecond);
 
 BENCHMARK_MAIN();

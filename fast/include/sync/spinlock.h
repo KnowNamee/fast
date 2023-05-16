@@ -12,7 +12,7 @@ class TASSpinLock {
   void unlock();
 
  private:
-  std::atomic<u32> _atomic = 0;
+  std::atomic<u32> _atomic{0};
 };
 
 }

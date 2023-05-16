@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <functional>
 
 namespace fast {
 
@@ -15,5 +16,7 @@ using i32 = std::int32_t;
 using i64 = std::int64_t;
 
 using usize = std::size_t;
+
+using Task = std::function<void()>;
 
 }
