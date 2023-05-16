@@ -13,3 +13,5 @@ endfunction()
 enable_testing()
 
 add_gtest(test_sync_spinlock sync/test_spinlock.cc)
+
+add_gtest(test_coro_coro coro/test_coro.cc)

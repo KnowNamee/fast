@@ -7,6 +7,7 @@ macro (SRCS)
     endforeach()
 endmacro()
 
+enable_language(ASM)
 
 SRCS(
     sync/spinlock.cc
@@ -18,6 +19,11 @@ SRCS(
     executors/thread_pool.cc
     executors/manual.cc
     executors/strand.cc
+
+    coro/ctx/context.S
+    coro/ctx/execution.cc
+    coro/ctx/machine.cc
+    coro/coroutine.cc
 )
 
 message("Library sources : ${LIBRARY_SOURCES}")
