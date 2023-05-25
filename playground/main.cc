@@ -149,7 +149,7 @@ int main() {
 
     pool.wait();
     auto fe = std::chrono::high_resolution_clock::now();
-    std::cout << "fibers sort : " << std::chrono::duration_cast<std::chrono::milliseconds>(fe - fs).count() << '\n';
+    std::cout << "fibers sort : " << std::chrono::duration_cast<std::chrono::milliseconds>(fe - fs).count() << "ms\n";
 
     // for(auto& e : elements) std::cout << e << '\n'; std::cout << '\n';
 
@@ -161,15 +161,13 @@ int main() {
 
     pool.stop();
 
-    std::cout << "fibers ok\n";
-
     auto ts = std::chrono::high_resolution_clock::now();
     auto t = std::thread([&]{
         SortTaskThreads(e2, 0, e2.size())();
     });
     t.join();
     auto te = std::chrono::high_resolution_clock::now();
-    std::cout << "threads sort : " << std::chrono::duration_cast<std::chrono::milliseconds>(te - ts).count() << '\n';
+    std::cout << "threads sort : " << std::chrono::duration_cast<std::chrono::milliseconds>(te - ts).count() << "ms\n";
 
     for (size_t i = 0; i + 1 < e2.size(); ++i) {
         if (e2[i] > e2[i + 1]) {
