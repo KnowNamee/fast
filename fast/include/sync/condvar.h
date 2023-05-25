@@ -12,7 +12,7 @@ class Condvar {
   void wait(Mutex& mu) {
     u32 epoch = epoch_.load(std::memory_order_acquire);
     mu.unlock();
-    futexWait(epoch_, epoch);
+    futexWait(epoch_, epoch, std::memory_order_relaxed);
     mu.lock();
   }
 

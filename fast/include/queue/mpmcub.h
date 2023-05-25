@@ -34,6 +34,7 @@ class MPMCUnboundedBlockingQueue {
       return !buffer_.empty() || (buffer_.empty() && closed_);
     });
     if (buffer_.empty() && closed_) {
+      for_not_empty_.notify_all();
       return std::nullopt;
     }
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <coro/ctx/execution.h>
+#include <exception>
 #include <types.h>
 
 namespace fast::coro {
@@ -18,14 +19,12 @@ class Coroutine : private ITrampoline {
  private:
   void run() noexcept override;
 
+  char _stack[1024 * 1024 * 3];
   Routine _routine;
-
   Coroutine* _parent;
   bool _isCompleted;
-  char _stack[1024 * 1024 * 2];
   ExecutionContext _current;
   ExecutionContext _target;
-  std::exception_ptr _ex;
 };
 
 }

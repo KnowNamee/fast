@@ -24,6 +24,13 @@ SRCS(
     coro/ctx/execution.cc
     coro/ctx/machine.cc
     coro/coroutine.cc
+
+    fibers/fiber.cc
+    fibers/handle.cc
+    fibers/sched.cc
+    fibers/futex.cc
+    fibers/mutex.cc
+    fibers/wait_group.cc
 )
 
 message("Library sources : ${LIBRARY_SOURCES}")

@@ -18,3 +18,5 @@ add_benchmark(bench_sync_mutex              sync/bench_mutex.cc)
 add_benchmark(bench_coro_coro               coro/bench_coro.cc)
 
 add_benchmark(bench_examples_false_sharing  examples/bench_false_sharing.cc)
+add_benchmark(bench_examples_strand         examples/bench_strand.cc)
+add_benchmark(bench_examples_merge_sort     examples/bench_merge_sort.cc)

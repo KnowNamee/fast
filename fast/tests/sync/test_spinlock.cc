@@ -2,6 +2,22 @@
 
 #include <sync/spinlock.h>
 
-TEST(ExampleTest, ExampleTest1) {
-    EXPECT_EQ(1, 1);
+using namespace fast::sync;
+
+TEST(SpinlockTest, LockUnlock) {
+    TASSpinLock spinlock;
+    spinlock.lock();
+    spinlock.unlock();
 }
+
+TEST(SpinlockTest, SequentialLockUnlock) {
+    TASSpinLock spinlock;
+    spinlock.lock();
+    spinlock.unlock();
+
+    spinlock.lock();
+    spinlock.unlock();
+}
+
+
+

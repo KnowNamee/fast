@@ -12,6 +12,17 @@ endfunction()
 
 enable_testing()
 
-add_gtest(test_sync_spinlock sync/test_spinlock.cc)
+add_gtest(test_sync_spinlock            sync/test_spinlock.cc)
+add_gtest(test_sync_mutex               sync/test_mutex.cc)
+add_gtest(test_sync_condvar             sync/test_condvar.cc)
+add_gtest(test_sync_wait_group          sync/test_wait_group.cc)
 
-add_gtest(test_coro_coro coro/test_coro.cc)
+add_gtest(test_executors_manual         executors/test_manual.cc)
+add_gtest(test_executors_strand         executors/test_strand.cc)
+add_gtest(test_executors_thread_pool    executors/test_thread_pool.cc)
+
+add_gtest(test_fibers_fibers            fibers/test_fibers.cc)
+add_gtest(test_fibers_mutex             fibers/test_mutex.cc)
+add_gtest(test_fibers_wait_group        fibers/test_wait_group.cc)
+
+add_gtest(test_coro_coro                coro/test_coro.cc)

@@ -2,10 +2,12 @@
 
 #include <thread>
 
+#include <iostream>
+
 namespace fast::sync {
 
 void TASSpinLock::lock() {
-	while (!_atomic.exchange(1, std::memory_order_acquire)) {
+	while (_atomic.exchange(1, std::memory_order_acquire)) {
 		while (_atomic.load(std::memory_order_relaxed)) {
 			std::this_thread::yield();
 		}

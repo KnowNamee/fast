@@ -1,4 +1,4 @@
-#include "sync/spinlock.h"
+#include <sync/spinlock.h>
 #include <executors/strand.h>
 
 #include <mutex>
@@ -7,6 +7,7 @@ namespace fast::executors {
 
 Strand::Strand(IExecutor& decorated)
     : _decorated(decorated)
+    , _tasks(std::make_shared<Tasks>())
     , _isRunning(false)
 { }
 

@@ -19,7 +19,7 @@ void ThreadPool::start() {
           return;
         }
         (*task)();
-        if (_waitingTasks.fetch_sub(1, std::memory_order_release) == 1) {
+        if (_waitingTasks.fetch_sub(1) == 1) {
           sync::futexWakeAll(sync::futexAddr(_waitingTasks));
         }
       }
@@ -37,7 +37,7 @@ ThreadPool* ThreadPool::current() {
 }
 
 void ThreadPool::wait() {
-  while (u32 value = _waitingTasks.load(std::memory_order_acquire)) {
+  while (u32 value = _waitingTasks.load()) {
     sync::futexWait(_waitingTasks, value);
   }
 }

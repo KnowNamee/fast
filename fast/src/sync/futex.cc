@@ -33,7 +33,7 @@ void futexWakeOne(u32* addr) {
 }
 
 void futexWakeAll(u32* addr) {
-    futexWake(addr, UINT32_MAX);
+    futexWake(addr, 100500);
 }
 
 u32* futexAddr(std::atomic<u32>& atomic) {

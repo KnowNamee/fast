@@ -7,6 +7,8 @@
 #include <thread>
 #include <pthread.h>
 
+#include <iostream>
+
 struct SpinLockBaseline {
     void lock() {
         while (_atomic.exchange(1)) {
@@ -43,11 +45,11 @@ struct PThreadSpinLock {
 template <typename BasicLockable>
 struct Counter {
     void count() {
-        for (size_t i = 0; i < 100000; ++i) {
+        for (size_t i = 0; i < 10000; ++i) {
             std::lock_guard<BasicLockable> guard(lockable);
             state++;
         }
-        for (size_t i = 0; i < 100000; ++i) {
+        for (size_t i = 0; i < 10000; ++i) {
             std::lock_guard<BasicLockable> guard(lockable);
             state--;
         }
