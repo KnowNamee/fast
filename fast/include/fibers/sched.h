@@ -8,7 +8,7 @@ namespace fast::fibers {
 
 using Scheduler = executors::ThreadPool;
 
-void go(Scheduler& scheduler, Task routine);
+void go(Scheduler& scheduler, Routine routine);
 void go(Task routine);
 void suspend(IAwaiter* awaiter);
 void yield();

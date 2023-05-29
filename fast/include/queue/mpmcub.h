@@ -19,43 +19,42 @@ template <typename T>
 class MPMCUnboundedBlockingQueue {
  public:
   bool Put(T value) {
-    std::lock_guard<Mutex> lock(mu_);
-    if (closed_) {
+    std::lock_guard<Mutex> lock(_mutex);
+    if (_isClosed) {
       return false;
     }
-    buffer_.push(std::move(value));
-    for_not_empty_.notify_one();
+    _buffer.emplace_back(std::move(value));
+    _notEmpty.notify_one();
     return true;
   }
 
   std::optional<T> Take() {
-    std::unique_lock<Mutex> lock(mu_);
-    for_not_empty_.wait(lock, [&] {
-      return !buffer_.empty() || (buffer_.empty() && closed_);
+    std::unique_lock<Mutex> lock(_mutex);
+    _notEmpty.wait(lock, [&] {
+      return !_buffer.empty() || _isClosed;
     });
-    if (buffer_.empty() && closed_) {
-      for_not_empty_.notify_all();
+    if (_isClosed) {
       return std::nullopt;
     }
 
-    T value = std::move(buffer_.front());
-    buffer_.pop();
+    T value = std::move(_buffer.front());
+    _buffer.pop_front();
 
     return value;
   }
 
   void Close() {
-    std::lock_guard<Mutex> lock(mu_);
-    closed_ = true;
-    for_not_empty_.notify_all();
+    std::lock_guard<Mutex> lock(_mutex);
+    _isClosed = true;
+    _notEmpty.notify_all();
   }
 
  private:
-  bool closed_{false};
-  Mutex mu_;
-  Condvar for_not_empty_;
+  bool _isClosed{false};
+  Mutex _mutex;
+  Condvar _notEmpty;
 
-  std::queue<T> buffer_;
+  std::deque<T> _buffer;
 };
 
 }

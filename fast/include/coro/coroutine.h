@@ -1,14 +1,13 @@
 #pragma once
 
 #include <coro/ctx/execution.h>
+#include <stacks/stacks.h>
 #include <exception>
 #include <types.h>
 
 namespace fast::coro {
 
 class Coroutine : private ITrampoline {
-  using Routine = Task;
-
  public:
   explicit Coroutine(Routine routine);
 
@@ -19,7 +18,7 @@ class Coroutine : private ITrampoline {
  private:
   void run() noexcept override;
 
-  char _stack[1024 * 1024 * 3];
+  stacks::Stack* _stack;
   Routine _routine;
   Coroutine* _parent;
   bool _isCompleted;

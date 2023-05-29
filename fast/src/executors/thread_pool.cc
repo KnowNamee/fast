@@ -19,7 +19,7 @@ void ThreadPool::start() {
           return;
         }
         (*task)();
-        if (_waitingTasks.fetch_sub(1) == 1) {
+        if (_waitingTasks.fetch_sub(1, std::memory_order_release) == 1) {
           sync::futexWakeAll(sync::futexAddr(_waitingTasks));
         }
       }
@@ -28,7 +28,7 @@ void ThreadPool::start() {
 }
 
 void ThreadPool::submit(Task task) {
-  _waitingTasks.fetch_add(1);
+  _waitingTasks.fetch_add(1, std::memory_order_acquire);
   _tasks.Put(std::move(task));
 }
 
@@ -38,7 +38,7 @@ ThreadPool* ThreadPool::current() {
 
 void ThreadPool::wait() {
   while (u32 value = _waitingTasks.load()) {
-    sync::futexWait(_waitingTasks, value);
+    sync::futexWait(_waitingTasks, value, std::memory_order_relaxed);
   }
 }
 

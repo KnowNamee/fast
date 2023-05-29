@@ -1,3 +1,4 @@
+#include "coro/coroutine.h"
 #include <fibers/fiber.h>
 
 namespace fast::fibers {

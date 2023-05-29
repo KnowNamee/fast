@@ -23,7 +23,7 @@ void suspend(IAwaiter* awaiter) {
   Fiber::current()->suspend(awaiter);
 }
 
-void go(Scheduler& scheduler, Task routine) {
+void go(Scheduler& scheduler, Routine routine) {
   auto* fiber = new Fiber(scheduler, std::move(routine));
   fiber->schedule();
 }

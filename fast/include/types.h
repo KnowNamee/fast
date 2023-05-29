@@ -4,6 +4,8 @@
 #include <functional>
 #include <atomic>
 
+#include <function2/function2.hpp>
+
 namespace fast {
 
 using u8  = std::uint8_t;
@@ -18,6 +20,7 @@ using i64 = std::int64_t;
 
 using usize = std::size_t;
 
-using Task = std::function<void()>;
+using Task = fu2::unique_function<void()>;
+using Routine = Task;
 
 }

@@ -1,21 +1,22 @@
+#include <stacks/stacks.h>
 #include <coro/coroutine.h>
-
-#include <iostream>
 
 namespace fast::coro {
 
 namespace {
 
 thread_local Coroutine* coro = nullptr;
+static stacks::Stacks stacks;
 
 }
 
 Coroutine::Coroutine(Routine routine)
-  : _routine(std::move(routine))
+  : _stack(stacks.get())
+  , _routine(std::move(routine))
   , _parent(coro)
   , _isCompleted(false)
 {
-  _target.setup(&_stack, this);
+  _target.setup(_stack->top(), this);
 }
 
 void Coroutine::resume() {
@@ -35,6 +36,8 @@ bool Coroutine::completed() const {
 void Coroutine::run() noexcept {
   _routine();
   _isCompleted = true;
+  stacks.ret(_stack);
+  _stack = nullptr;
   _target.exitTo(_current);
 }
 

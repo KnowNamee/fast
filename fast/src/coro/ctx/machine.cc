@@ -13,7 +13,7 @@ void machineContextTrampoline(void*, void*, void*, void*, void*, void*, void* ar
 }
 
 void MachineContext::setup(void* stack, ITrampoline* trampoline) {
-  rsp_ = setupMachineContext((void*)((uint64_t)stack + (1024 * 1024 * 2 - 1)), (void*)machineContextTrampoline, trampoline);
+  rsp_ = setupMachineContext(stack, (void*)machineContextTrampoline, trampoline);
 }
 
 void MachineContext::switchTo(MachineContext& target) {

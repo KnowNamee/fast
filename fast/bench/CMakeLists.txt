@@ -17,5 +17,8 @@ add_benchmark(bench_sync_mutex              sync/bench_mutex.cc)
 
 add_benchmark(bench_coro_coro               coro/bench_coro.cc)
 
+add_benchmark(bench_executors_thread_pool   executors/bench_thread_pool.cc)
+
 add_benchmark(bench_examples_false_sharing  examples/bench_false_sharing.cc)
 add_benchmark(bench_examples_strand         examples/bench_strand.cc)
+add_benchmark(bench_examples_fu2            examples/bench_fu2.cc)

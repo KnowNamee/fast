@@ -31,12 +31,15 @@ SRCS(
     fibers/futex.cc
     fibers/mutex.cc
     fibers/wait_group.cc
+
+    stacks/stacks.cc
 )
 
 message("Library sources : ${LIBRARY_SOURCES}")
 
 add_library(fastlib STATIC "${LIBRARY_SOURCES}")
 target_include_directories(fastlib PUBLIC "include")
+target_link_libraries(fastlib "function2;expected;asio")
 
 add_subdirectory(tests)
 add_subdirectory(bench)

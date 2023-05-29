@@ -2,6 +2,8 @@
 
 #include <coro/coroutine.h>
 
+#include <asio/coroutine.hpp>
+
 static void benchmarkCoroSwitchContext(benchmark::State& state) {
   fast::coro::Coroutine coro([&state](){
     while (true) {

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <types.h>
 #include <executors/thread_pool.h>
 #include <coro/coroutine.h>
 #include <fibers/awaiter.h>
@@ -8,7 +9,6 @@ namespace fast::fibers {
 
 class Fiber {
   using Scheduler = executors::ThreadPool;
-  using Routine = Task;
 
  public:
   explicit Fiber(Scheduler& scheduler, Routine routine);
